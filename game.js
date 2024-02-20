@@ -1,4 +1,3 @@
-var jumpSound;
 var config = {
     type: Phaser.AUTO,
     width: 1920,
@@ -16,7 +15,6 @@ var config = {
         update: update
     }
 };
-
 var player;
 var stars;
 var bombs;
@@ -26,8 +24,8 @@ var score = 0;
 var gameOver = false;
 var scoreText;
 var game = new Phaser.Game(config);
-//
 var badGuy;
+var jumpSound;
 
 function preload ()
 {
@@ -36,20 +34,13 @@ function preload ()
     this.load.image('star', 'assets/pngwing.com.png');
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/dude1.png', { frameWidth: 32, frameHeight: 48 });
-    //
     this.load.audio('jumpSound', 'assets/pryjok-mario.mp3');
     this.load.spritesheet('dude_angry', 'assets/dude_angry.png', { frameWidth: 32, frameHeight: 48 });
 }
-
 function create ()
 {
-    
     this.add.image(980, 500, 'sky');
-    
-    
     platforms = this.physics.add.staticGroup();
-
-    
     platforms.create(400, 808, 'ground').setScale(2).refreshBody();
     platforms.create(600, 400, 'ground');
     platforms.create(50, 250, 'ground');
@@ -101,20 +92,13 @@ function create ()
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(stars, platforms);
     this.physics.add.collider(bombs, platforms);
-    //
-    //this.physics.add.collider(badGuy, platforms);
-    //
     this.physics.add.overlap(player, stars, collectStar, null, this);
-
     this.physics.add.collider(player, bombs, hitBomb, null, this);
-    //
     jumpSound = this.sound.add('jumpSound');
-    //
     badGuy = this.physics.add.sprite(750, 450, 'dude_angry');
     badGuy.setBounce(0.2);
     badGuy.setCollideWorldBounds(true);
     badGuy.setGravityY(0);
-    //
     this.physics.add.collider(badGuy, platforms);
 
     this.anims.create({
@@ -136,8 +120,6 @@ function create ()
         frameRate: 10,
         repeat: -1
     });
-    //
-
 
 }
 
@@ -147,27 +129,6 @@ function update ()
     {
         return;
     }
-
-    if (cursors.up.isDown && player.body.touching.down) {
-        player.setVelocityY(-330);
-
-        //
-        jumpSound.play();
-    }
-    
-
-    if (cursors.left.isDown) {
-        player.setVelocityX(-160);
-        player.anims.play('left', true);
-    } else if (cursors.right.isDown) {
-        player.setVelocityX(160);
-        player.anims.play('right', true);
-    } else {
-        player.setVelocityX(0);
-        player.anims.play('turn');
-    }
-    
-    // Player jump
     if (cursors.up.isDown && player.body.touching.down) {
         player.setVelocityY(-330);
         jumpSound.play();
@@ -182,21 +143,26 @@ function update ()
         player.setVelocityX(0);
         player.anims.play('turn');
     }
-
-
-
-     // Bad Guy movement
+    if (cursors.up.isDown && player.body.touching.down) {
+        player.setVelocityY(-330);
+        jumpSound.play();
+    }
+    if (cursors.left.isDown) {
+        player.setVelocityX(-160);
+        player.anims.play('left', true);
+    } else if (cursors.right.isDown) {
+        player.setVelocityX(160);
+        player.anims.play('right', true);
+    } else {
+        player.setVelocityX(0);
+        player.anims.play('turn');
+    }
      if (Math.random() < 0.02) {
-        // Change direction randomly
         badGuy.setVelocityX(Phaser.Math.Between(-200, 200));
     }
-
-    // Bad Guy and Player collision detection
     this.physics.world.collide(player, badGuy, function () {
         endGame();
     });
-
-    // Update bad guy's animations based on velocity
     if (badGuy.body.velocity.x > 0) {
         badGuy.anims.play('badGuyRight', true);
     } else if (badGuy.body.velocity.x < 0) {
@@ -205,7 +171,6 @@ function update ()
         badGuy.anims.play('badGuyTurn');
     }
 }
-
 
 function endGame() {
     this.physics.pause();
@@ -217,47 +182,34 @@ function endGame() {
 function collectStar (player, star)
 {
     star.disableBody(true, true);
-
     score += 10;
     scoreText.setText('Score: ' + score);
-    //
     var x = Phaser.Math.Between(0, config.width);
     var bomb = bombs.create(x, 16, 'bomb');
     bomb.setBounce(1);
     bomb.setCollideWorldBounds(true);
     bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
     bomb.allowGravity = false;
-    //
 
     if (stars.countActive(true) === 0)
     {
-
         stars.children.iterate(function (child) {
-
             child.enableBody(true, child.x, 0, true, true);
-
         });
-        //
         for (var i = 0; i < 12; i++) {
             var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
             var newStar = stars.create(x, 0, 'star');
             newStar.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
         }
-
         for (var i = 0; i < bombs.children.entries.length; i++) {
             bombs.children.entries[i].destroy();
-            //
         }
     }
 }
-
 function hitBomb (player, bomb)
 {
     this.physics.pause();
-
     player.setTint(0xff0000);
-
     player.anims.play('turn');
-
     gameOver = true;
 }
