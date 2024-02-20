@@ -29,8 +29,17 @@ var jumpSound;
 
 function preload ()
 {
+    this.load.image('ground1', 'assets/1pl.png');
+    this.load.image('ground2', 'assets/2pl.png');
+    this.load.image('ground3', 'assets/3pl.png');
+    this.load.image('ground_1', 'assets/1up.png');
+    this.load.image('ground_2', 'assets/2up.png');
+    this.load.image('ground_3', 'assets/3up.png');
+
     this.load.image('sky', 'assets/fon.jpg');
+    //
     this.load.image('ground', 'assets/platform1.png');
+    //
     this.load.image('star', 'assets/pngwing.com.png');
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/dude1.png', { frameWidth: 32, frameHeight: 48 });
@@ -41,10 +50,20 @@ function create ()
 {
     this.add.image(980, 500, 'sky');
     platforms = this.physics.add.staticGroup();
-    platforms.create(400, 808, 'ground').setScale(2).refreshBody();
-    platforms.create(600, 400, 'ground');
-    platforms.create(50, 250, 'ground');
-    platforms.create(750, 220, 'ground');
+    platforms.create(95, 932, 'ground1').setScale(2).refreshBody();
+    platforms.create(250, 932, 'ground2').setScale(2).refreshBody();
+    platforms.create(400, 932, 'ground2').setScale(2).refreshBody();
+    platforms.create(550, 932, 'ground2').setScale(2).refreshBody();
+    platforms.create(700, 932, 'ground2').setScale(2).refreshBody();
+    platforms.create(850, 932, 'ground2').setScale(2).refreshBody();
+    platforms.create(1000, 932, 'ground2').setScale(2).refreshBody();
+    platforms.create(1075, 932, 'ground2').setScale(2).refreshBody();
+    platforms.create(1225, 932, 'ground2').setScale(2).refreshBody();
+    platforms.create(1375, 932, 'ground2').setScale(2).refreshBody();
+    platforms.create(1525, 932, 'ground2').setScale(2).refreshBody();
+    platforms.create(1675, 932, 'ground2').setScale(2).refreshBody();
+    platforms.create(1825, 932, 'ground3').setScale(2).refreshBody();
+
 
     player = this.physics.add.sprite(100, 450, 'dude');
 
