@@ -48,22 +48,37 @@ function preload ()
 }
 function create ()
 {
-    this.add.image(980, 500, 'sky');
+    this.add.image(960, 500, 'sky');
     platforms = this.physics.add.staticGroup();
-    platforms.create(95, 932, 'ground1').setScale(2).refreshBody();
-    platforms.create(250, 932, 'ground2').setScale(2).refreshBody();
-    platforms.create(400, 932, 'ground2').setScale(2).refreshBody();
-    platforms.create(550, 932, 'ground2').setScale(2).refreshBody();
-    platforms.create(700, 932, 'ground2').setScale(2).refreshBody();
-    platforms.create(850, 932, 'ground2').setScale(2).refreshBody();
-    platforms.create(1000, 932, 'ground2').setScale(2).refreshBody();
-    platforms.create(1075, 932, 'ground2').setScale(2).refreshBody();
-    platforms.create(1225, 932, 'ground2').setScale(2).refreshBody();
-    platforms.create(1375, 932, 'ground2').setScale(2).refreshBody();
-    platforms.create(1525, 932, 'ground2').setScale(2).refreshBody();
-    platforms.create(1675, 932, 'ground2').setScale(2).refreshBody();
-    platforms.create(1825, 932, 'ground3').setScale(2).refreshBody();
-
+    platforms.create(50, 932, 'ground1').setScale(1).refreshBody();
+    platforms.create(127, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(203, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(279, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(355, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(431, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(507, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(583, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(659, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(735, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(811, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(887, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(963, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(1039, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(1115, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(1191, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(1267, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(1343, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(1419, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(1495, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(1571, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(1647, 932, 'ground2').setScale(1).refreshBody();
+    
+    //
+    platforms.create(95, 432, 'ground_1').setScale(1).refreshBody();
+    platforms.create(245, 434, 'ground_2').setScale(1).refreshBody();
+    platforms.create(395, 434, 'ground_3').setScale(1).refreshBody();     
+    //
+    platforms.create(1825, 694, 'ground_3').setScale(1).refreshBody();
 
     player = this.physics.add.sprite(100, 450, 'dude');
 
