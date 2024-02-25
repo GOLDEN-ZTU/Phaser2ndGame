@@ -72,14 +72,33 @@ function create ()
     platforms.create(1495, 932, 'ground2').setScale(1).refreshBody();
     platforms.create(1571, 932, 'ground2').setScale(1).refreshBody();
     platforms.create(1647, 932, 'ground2').setScale(1).refreshBody();
-    
+    platforms.create(1723, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(1799, 932, 'ground2').setScale(1).refreshBody();
+    platforms.create(1875, 932, 'ground3').setScale(1).refreshBody();    
     //
-    platforms.create(95, 432, 'ground_1').setScale(1).refreshBody();
-    platforms.create(245, 434, 'ground_2').setScale(1).refreshBody();
-    platforms.create(395, 434, 'ground_3').setScale(1).refreshBody();     
+    platforms.create(1825, 754, 'ground_3').setScale(1).refreshBody();
+    platforms.create(1749, 754, 'ground_2').setScale(1).refreshBody();
+    platforms.create(1674, 753, 'ground_1').setScale(1).refreshBody();
     //
-    platforms.create(1825, 694, 'ground_3').setScale(1).refreshBody();
-
+    platforms.create(1425, 614, 'ground_3').setScale(1).refreshBody();
+    platforms.create(1349, 614, 'ground_2').setScale(1).refreshBody();
+    platforms.create(1274, 614, 'ground_2').setScale(1).refreshBody();
+    platforms.create(1198, 613, 'ground_1').setScale(1).refreshBody();
+    //
+    platforms.create(1025, 714, 'ground_3').setScale(1).refreshBody();
+    platforms.create(949, 714, 'ground_2').setScale(1).refreshBody();
+    platforms.create(874, 714, 'ground_2').setScale(1).refreshBody();
+    platforms.create(798, 713, 'ground_1').setScale(1).refreshBody();
+    //
+    platforms.create(725, 534, 'ground_3').setScale(1).refreshBody();
+    platforms.create(649, 534, 'ground_2').setScale(1).refreshBody();
+    platforms.create(572, 534, 'ground_2').setScale(1).refreshBody();
+    platforms.create(497, 534, 'ground_2').setScale(1).refreshBody();
+    platforms.create(422, 533, 'ground_1').setScale(1).refreshBody();
+    //
+    platforms.create(297, 384, 'ground_3').setScale(1).refreshBody();
+    platforms.create(222, 383, 'ground_1').setScale(1).refreshBody();
+    //
     player = this.physics.add.sprite(100, 450, 'dude');
 
     player.setBounce(0.2);
