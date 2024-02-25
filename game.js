@@ -36,6 +36,13 @@ function preload ()
     this.load.image('ground_2', 'assets/2up.png');
     this.load.image('ground_3', 'assets/3up.png');
 
+    this.load.image('ks_1', 'assets/kyst1.png');
+    this.load.image('ks_2', 'assets/kyst2.png');
+    this.load.image('d_1', 'assets/dub1.png');
+    this.load.image('d_2', 'assets/dub2.png');
+    this.load.image('d_3', 'assets/dub3.png');
+    this.load.image('s_1', 'assets/stone.png');
+
     this.load.image('sky', 'assets/fon.jpg');
     //
     this.load.image('ground', 'assets/platform1.png');
@@ -103,7 +110,20 @@ function create ()
 
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
-
+    //
+;   kyst = this.physics.add.staticGroup();
+    kyst.create(1100, 874, 'ks_1').setScale(1).refreshBody();
+    kyst.create(1700, 874, 'ks_2').setScale(1).refreshBody();
+    kyst.create(600, 487, 'ks_1').setScale(1).refreshBody();
+    kyst.create(1300, 567, 'ks_1').setScale(1).refreshBody();
+    kyst.create(600, 801, 'd_1').setScale(1).refreshBody();
+    kyst.create(250, 273, 'd_2').setScale(1).refreshBody();
+    kyst.create(1750, 643, 'd_2').setScale(1).refreshBody();
+    kyst.create(450, 879, 's_1').setScale(1).refreshBody();
+    kyst.create(850, 672, 's_1').setScale(1).refreshBody();
+    kyst.create(1670, 712, 's_1').setScale(1).refreshBody();
+    kyst.create(470, 493, 'd_3').setScale(1).refreshBody();
+    kyst.create(1470, 880, 'd_3').setScale(1).refreshBody();
     this.anims.create({
         key: 'left',
         frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
@@ -128,8 +148,8 @@ function create ()
 
     stars = this.physics.add.group({
         key: 'star',
-        repeat: 26,
-        setXY: { x: 12, y: 0, stepX: 70 }
+        repeat: 25,
+        setXY: { x: 180, y: 0, stepX: 70 }
     });
 
     stars.children.iterate(function (child) {
