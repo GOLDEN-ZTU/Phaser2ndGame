@@ -26,7 +26,9 @@ var scoreText;
 var game = new Phaser.Game(config);
 var badGuy;
 var jumpSound;
-
+//
+var restartButton;
+//
 function preload ()
 {
     this.load.image('ground1', 'assets/1pl.png');
@@ -55,6 +57,16 @@ function preload ()
 }
 function create ()
 {
+    restartButton = this.add.text(16, 50, 'Restart', { fontSize: '24px', fill: '#000' })
+        .setInteractive()
+        .on('pointerdown', restartGame);
+
+    this.input.keyboard.on('keydown-SPACE', function (event) {
+        if (gameOver) {
+            restartGame.call(this);
+        }
+    }, this);
+        //
     this.add.image(960, 500, 'sky');
     platforms = this.physics.add.staticGroup();
     platforms.create(50, 932, 'ground1').setScale(1).refreshBody();
@@ -250,6 +262,8 @@ function endGame() {
     player.setTint(0xff0000);
     player.anims.play('turn');
     gameOver = true;
+
+    restartButton.visible = true;
 }
 
 function collectStar (player, star)
@@ -285,4 +299,10 @@ function hitBomb (player, bomb)
     player.setTint(0xff0000);
     player.anims.play('turn');
     gameOver = true;
+}
+//
+function restartGame() {
+    gameOver = false;
+    score = 0;
+    this.scene.restart();
 }
