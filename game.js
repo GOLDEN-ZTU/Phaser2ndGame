@@ -128,7 +128,7 @@ function create ()
 
     stars = this.physics.add.group({
         key: 'star',
-        repeat: 11,
+        repeat: 26,
         setXY: { x: 12, y: 0, stepX: 70 }
     });
 
@@ -148,7 +148,7 @@ function create ()
     this.physics.add.overlap(player, stars, collectStar, null, this);
     this.physics.add.collider(player, bombs, hitBomb, null, this);
     jumpSound = this.sound.add('jumpSound');
-    badGuy = this.physics.add.sprite(750, 450, 'dude_angry');
+    badGuy = this.physics.add.sprite(1140, 450, 'dude_angry');
     badGuy.setBounce(0.2);
     badGuy.setCollideWorldBounds(true);
     badGuy.setGravityY(0);
