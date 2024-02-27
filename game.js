@@ -160,7 +160,7 @@ function create ()
 
     stars = this.physics.add.group({
         key: 'star',
-        repeat: 25,
+        repeat:24,
         setXY: { x: 180, y: 0, stepX: 70 }
     });
 
@@ -247,6 +247,7 @@ function update ()
     }
     this.physics.world.collide(player, badGuy, function () {
         endGame();
+        
     });
     if (badGuy.body.velocity.x > 0) {
         badGuy.anims.play('badGuyRight', true);
@@ -255,14 +256,24 @@ function update ()
     } else {
         badGuy.anims.play('badGuyTurn');
     }
+    //
+    if (stars.countActive(true) === 0)
+    {
+        endGame(true); 
+    }
 }
-
-function endGame() {
+//
+function endGame(isWin) {
     this.physics.pause();
-    player.setTint(0xff0000);
-    player.anims.play('turn');
-    gameOver = true;
+    
+    if (isWin) {
+        var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You Win!', { fontSize: '32px', fill: '#fff' });
+    } else {
+        player.setTint(0xff0000);
+        player.anims.play('turn');
+    }
 
+    gameOver = true;
     restartButton.visible = true;
 }
 
@@ -299,6 +310,7 @@ function hitBomb (player, bomb)
     player.setTint(0xff0000);
     player.anims.play('turn');
     gameOver = true;
+    var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You Lose!', { fontSize: '32px', fill: '#fff' });
 }
 //
 function restartGame() {
