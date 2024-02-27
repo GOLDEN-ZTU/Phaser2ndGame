@@ -26,11 +26,15 @@ var scoreText;
 var game = new Phaser.Game(config);
 var badGuy;
 var jumpSound;
+var jumps=2;
 //
 var restartButton;
 //
+var score = 0;
+//
 function preload ()
-{
+{   
+    this.load.image('But1', 'assets/Button_1.png');
     this.load.image('ground1', 'assets/1pl.png');
     this.load.image('ground2', 'assets/2pl.png');
     this.load.image('ground3', 'assets/3pl.png');
@@ -57,15 +61,7 @@ function preload ()
 }
 function create ()
 {
-    restartButton = this.add.text(16, 50, 'Restart', { fontSize: '24px', fill: '#000' })
-        .setInteractive()
-        .on('pointerdown', restartGame);
-
-    this.input.keyboard.on('keydown-SPACE', function (event) {
-        if (gameOver) {
-            restartGame.call(this);
-        }
-    }, this);
+    
         //
     this.add.image(960, 500, 'sky');
     platforms = this.physics.add.staticGroup();
@@ -136,6 +132,19 @@ function create ()
     kyst.create(1670, 712, 's_1').setScale(1).refreshBody();
     kyst.create(470, 493, 'd_3').setScale(1).refreshBody();
     kyst.create(1470, 880, 'd_3').setScale(1).refreshBody();
+    //
+    but = this.physics.add.staticGroup();
+    but.create(100, 120, 'But1').setScale(1).refreshBody();
+    //
+    
+    //
+    restartButton = this.add.sprite(100, 120, 'But1')
+        .setInteractive()
+        .on('pointerdown', function () {
+            restartGame();
+        });
+
+    restartButton.visible = false;
     this.anims.create({
         key: 'left',
         frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
@@ -206,6 +215,7 @@ function create ()
         repeat: -1
     });
 
+
 }
 
 function update ()
@@ -217,7 +227,11 @@ function update ()
     if (cursors.up.isDown && player.body.touching.down) {
         player.setVelocityY(-330);
         jumpSound.play();
+        jumps--;
     }
+    if (cursors.up.isUp && player.body.touching.down) {
+        jumps = 2;
+    }  
     if (cursors.left.isDown) {
         player.setVelocityX(-160);
         player.anims.play('left', true);
@@ -246,7 +260,7 @@ function update ()
         badGuy.setVelocityX(Phaser.Math.Between(-200, 200));
     }
     this.physics.world.collide(player, badGuy, function () {
-        endGame();
+        endGame(false);
         
     });
     if (badGuy.body.velocity.x > 0) {
@@ -271,6 +285,7 @@ function endGame(isWin) {
     } else {
         player.setTint(0xff0000);
         player.anims.play('turn');
+        var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You Lose!', { fontSize: '32px', fill: '#fff' });
     }
 
     gameOver = true;
@@ -312,9 +327,21 @@ function hitBomb (player, bomb)
     gameOver = true;
     var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You Lose!', { fontSize: '32px', fill: '#fff' });
 }
-//
+
 function restartGame() {
-    gameOver = false;
-    score = 0;
+    // Stop the physics
+    this.physics.pause();
+
+    // Clean up game objects
+    player.destroy();
+    badGuy.destroy();
+    stars.clear(true, true);
+    bombs.clear(true, true);
+    platforms.clear(true, true);
+    kyst.clear(true, true);
+    but.clear(true, true);
+    restartButton.destroy();
+
+    // Restart the scene
     this.scene.restart();
 }
