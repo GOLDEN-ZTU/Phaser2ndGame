@@ -145,9 +145,9 @@ function create() {
     but = this.physics.add.staticGroup();
     but.create(100, 120, 'But1').setScale(1).refreshBody();
     //
-    /*this.cameras.main.setBounds(0,0,worldWidht,1080);
+    this.cameras.main.setBounds(0,0,worldWidht,1080);
     this.physics.world.setBounds(0,0,worldWidht,1080);
-    this.camera.main.startFollow(player);*/
+    this.cameras.main.startFollow(player);
     //
     restartButton = this.add.sprite(100, 120, 'But1')
         .setInteractive()
