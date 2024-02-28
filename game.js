@@ -26,14 +26,16 @@ var scoreText;
 var game = new Phaser.Game(config);
 var badGuy;
 var jumpSound;
-var jumps=2;
+var jumps = 2;
 //
 var restartButton;
 //
 var score = 0;
 //
-function preload ()
-{   
+var worldWidht = 9600
+function preload() {
+    this.load.image('fon+', 'assets/fon+.jpg');
+    //
     this.load.image('But1', 'assets/Button_1.png');
     this.load.image('ground1', 'assets/1pl.png');
     this.load.image('ground2', 'assets/2pl.png');
@@ -59,37 +61,45 @@ function preload ()
     this.load.audio('jumpSound', 'assets/pryjok-mario.mp3');
     this.load.spritesheet('dude_angry', 'assets/dude_angry.png', { frameWidth: 32, frameHeight: 48 });
 }
-function create ()
-{
-    
-        //
-    this.add.image(960, 500, 'sky');
+function create() {
+
+    //
+    this.add.tileSprite(0, 0, worldWidht, 1080, "fon+").setOrigin(0, 0);
+
     platforms = this.physics.add.staticGroup();
-    platforms.create(50, 932, 'ground1').setScale(1).refreshBody();
-    platforms.create(127, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(203, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(279, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(355, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(431, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(507, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(583, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(659, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(735, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(811, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(887, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(963, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(1039, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(1115, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(1191, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(1267, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(1343, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(1419, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(1495, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(1571, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(1647, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(1723, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(1799, 932, 'ground2').setScale(1).refreshBody();
-    platforms.create(1875, 932, 'ground3').setScale(1).refreshBody();    
+    //this.add.image(960, 500, 'sky');
+    
+    for (var x = 77; x < worldWidht; x = x + 76) {
+        console.log(x)
+        platforms.create(x, 892, 'ground2').setOrigin(0,0).refreshBody();
+    }
+
+    
+     platforms.create(40, 932, 'ground1').setScale(1).refreshBody();
+    // platforms.create(127, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(203, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(279, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(355, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(431, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(507, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(583, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(659, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(735, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(811, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(887, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(963, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(1039, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(1115, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(1191, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(1267, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(1343, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(1419, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(1495, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(1571, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(1647, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(1723, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(1799, 932, 'ground2').setScale(1).refreshBody();
+    // platforms.create(1875, 932, 'ground3').setScale(1).refreshBody();
     //
     platforms.create(1825, 754, 'ground_3').setScale(1).refreshBody();
     platforms.create(1749, 754, 'ground_2').setScale(1).refreshBody();
@@ -115,11 +125,10 @@ function create ()
     platforms.create(222, 383, 'ground_1').setScale(1).refreshBody();
     //
     player = this.physics.add.sprite(100, 450, 'dude');
-
     player.setBounce(0.2);
-    player.setCollideWorldBounds(true);
+    player.setCollideWorldBounds(false);
     //
-;   kyst = this.physics.add.staticGroup();
+    ; kyst = this.physics.add.staticGroup();
     kyst.create(1100, 874, 'ks_1').setScale(1).refreshBody();
     kyst.create(1700, 874, 'ks_2').setScale(1).refreshBody();
     kyst.create(600, 487, 'ks_1').setScale(1).refreshBody();
@@ -136,7 +145,9 @@ function create ()
     but = this.physics.add.staticGroup();
     but.create(100, 120, 'But1').setScale(1).refreshBody();
     //
-    
+    /*this.cameras.main.setBounds(0,0,worldWidht,1080);
+    this.physics.world.setBounds(0,0,worldWidht,1080);
+    this.camera.main.startFollow(player);*/
     //
     restartButton = this.add.sprite(100, 120, 'But1')
         .setInteractive()
@@ -154,7 +165,7 @@ function create ()
 
     this.anims.create({
         key: 'turn',
-        frames: [ { key: 'dude', frame: 4 } ],
+        frames: [{ key: 'dude', frame: 4 }],
         frameRate: 20
     });
 
@@ -169,7 +180,7 @@ function create ()
 
     stars = this.physics.add.group({
         key: 'star',
-        repeat:24,
+        repeat: 24,
         setXY: { x: 180, y: 0, stepX: 70 }
     });
 
@@ -218,10 +229,8 @@ function create ()
 
 }
 
-function update ()
-{
-    if (gameOver)
-    {
+function update() {
+    if (gameOver) {
         return;
     }
     if (cursors.up.isDown && player.body.touching.down) {
@@ -231,7 +240,7 @@ function update ()
     }
     if (cursors.up.isUp && player.body.touching.down) {
         jumps = 2;
-    }  
+    }
     if (cursors.left.isDown) {
         player.setVelocityX(-160);
         player.anims.play('left', true);
@@ -256,12 +265,12 @@ function update ()
         player.setVelocityX(0);
         player.anims.play('turn');
     }
-     if (Math.random() < 0.02) {
+    if (Math.random() < 0.02) {
         badGuy.setVelocityX(Phaser.Math.Between(-200, 200));
     }
     this.physics.world.collide(player, badGuy, function () {
         endGame(false);
-        
+
     });
     if (badGuy.body.velocity.x > 0) {
         badGuy.anims.play('badGuyRight', true);
@@ -271,15 +280,14 @@ function update ()
         badGuy.anims.play('badGuyTurn');
     }
     //
-    if (stars.countActive(true) === 0)
-    {
-        endGame(true); 
+    if (stars.countActive(true) === 0) {
+        endGame(true);
     }
 }
 //
 function endGame(isWin) {
     this.physics.pause();
-    
+
     if (isWin) {
         var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You Win!', { fontSize: '32px', fill: '#fff' });
     } else {
@@ -292,8 +300,7 @@ function endGame(isWin) {
     restartButton.visible = true;
 }
 
-function collectStar (player, star)
-{
+function collectStar(player, star) {
     star.disableBody(true, true);
     score += 10;
     scoreText.setText('Score: ' + score);
@@ -304,8 +311,7 @@ function collectStar (player, star)
     bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
     bomb.allowGravity = false;
 
-    if (stars.countActive(true) === 0)
-    {
+    if (stars.countActive(true) === 0) {
         stars.children.iterate(function (child) {
             child.enableBody(true, child.x, 0, true, true);
         });
@@ -319,13 +325,12 @@ function collectStar (player, star)
         }
     }
 }
-function hitBomb (player, bomb)
-{
+function hitBomb(player, bomb) {
     this.physics.pause();
     player.setTint(0xff0000);
     player.anims.play('turn');
     gameOver = true;
-    var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You Lose!', { fontSize: '32px', fill: '#fff' });
+    var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You are dead!', { fontSize: '32px', fill: '#fff' });
 }
 
 function restartGame() {
