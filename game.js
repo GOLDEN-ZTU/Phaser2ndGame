@@ -60,6 +60,7 @@ function preload() {
     this.load.spritesheet('dude', 'assets/dude1.png', { frameWidth: 32, frameHeight: 48 });
     this.load.audio('jumpSound', 'assets/pryjok-mario.mp3');
     this.load.spritesheet('dude_angry', 'assets/dude_angry.png', { frameWidth: 32, frameHeight: 48 });
+    this.load.image('win1', 'assets/win1.webp');
 }
 function create() {
 
@@ -145,8 +146,10 @@ function create() {
         kyst.create(600+y, 801, 'd_1').setScale(1).refreshBody();
         kyst.create(2000+y, 810, 'd_2').setScale(1).refreshBody();
     }
-
-    //
+    //-----------------
+    win = this.physics.add.group();
+    win.create(9525, 600, 'win1').setDisplaySize(70, 70);
+    //-------------------
     but = this.physics.add.staticGroup();
     but.create(100, 120, 'But1').setScale(1).refreshBody();
     //
@@ -204,6 +207,7 @@ function create() {
     this.physics.add.overlap(player, stars, collectStar, null, this);
     this.physics.add.collider(player, bombs, hitBomb, null, this);
     jumpSound = this.sound.add('jumpSound');
+    this.physics.add.collider(win, platforms);
     badGuy = this.physics.add.sprite(1140, 450, 'dude_angry');
     badGuy.setBounce(0.2);
     badGuy.setCollideWorldBounds(true);
