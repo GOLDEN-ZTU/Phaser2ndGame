@@ -73,7 +73,7 @@ function create() {
         console.log(x)
         platforms.create(x, 892, 'ground2').setOrigin(0,0).refreshBody();
     }
-
+    ; kyst = this.physics.add.staticGroup();
     
      platforms.create(40, 932, 'ground1').setScale(1).refreshBody();
     // platforms.create(127, 932, 'ground2').setScale(1).refreshBody();
@@ -104,43 +104,48 @@ function create() {
     platforms.create(1825, 754, 'ground_3').setScale(1).refreshBody();
     platforms.create(1749, 754, 'ground_2').setScale(1).refreshBody();
     platforms.create(1674, 753, 'ground_1').setScale(1).refreshBody();
+    kyst.create(1750, 643, 'd_2').setScale(1).refreshBody();
+    kyst.create(1670, 712, 's_1').setScale(1).refreshBody();
     //
     platforms.create(1425, 614, 'ground_3').setScale(1).refreshBody();
     platforms.create(1349, 614, 'ground_2').setScale(1).refreshBody();
     platforms.create(1274, 614, 'ground_2').setScale(1).refreshBody();
     platforms.create(1198, 613, 'ground_1').setScale(1).refreshBody();
+    kyst.create(1300, 567, 'ks_1').setScale(1).refreshBody();
     //
     platforms.create(1025, 714, 'ground_3').setScale(1).refreshBody();
     platforms.create(949, 714, 'ground_2').setScale(1).refreshBody();
     platforms.create(874, 714, 'ground_2').setScale(1).refreshBody();
     platforms.create(798, 713, 'ground_1').setScale(1).refreshBody();
+    kyst.create(850, 672, 's_1').setScale(1).refreshBody();
     //
     platforms.create(725, 534, 'ground_3').setScale(1).refreshBody();
     platforms.create(649, 534, 'ground_2').setScale(1).refreshBody();
     platforms.create(572, 534, 'ground_2').setScale(1).refreshBody();
     platforms.create(497, 534, 'ground_2').setScale(1).refreshBody();
     platforms.create(422, 533, 'ground_1').setScale(1).refreshBody();
+    kyst.create(600, 487, 'ks_1').setScale(1).refreshBody();
+    kyst.create(470, 493, 'd_3').setScale(1).refreshBody();
     //
     platforms.create(297, 384, 'ground_3').setScale(1).refreshBody();
     platforms.create(222, 383, 'ground_1').setScale(1).refreshBody();
+    kyst.create(250, 273, 'd_2').setScale(1).refreshBody();
     //
     player = this.physics.add.sprite(100, 450, 'dude');
     player.setBounce(0.2);
     player.setCollideWorldBounds(false);
     //
-    ; kyst = this.physics.add.staticGroup();
-    kyst.create(1100, 874, 'ks_1').setScale(1).refreshBody();
-    kyst.create(1700, 874, 'ks_2').setScale(1).refreshBody();
-    kyst.create(600, 487, 'ks_1').setScale(1).refreshBody();
-    kyst.create(1300, 567, 'ks_1').setScale(1).refreshBody();
-    kyst.create(600, 801, 'd_1').setScale(1).refreshBody();
-    kyst.create(250, 273, 'd_2').setScale(1).refreshBody();
-    kyst.create(1750, 643, 'd_2').setScale(1).refreshBody();
-    kyst.create(450, 879, 's_1').setScale(1).refreshBody();
-    kyst.create(850, 672, 's_1').setScale(1).refreshBody();
-    kyst.create(1670, 712, 's_1').setScale(1).refreshBody();
-    kyst.create(470, 493, 'd_3').setScale(1).refreshBody();
-    kyst.create(1470, 880, 'd_3').setScale(1).refreshBody();
+    //платформа кусти,дерева,камні
+    for (var y = 0; y < worldWidht; y = y + 1920) {
+        console.log(y)
+        kyst.create(1100+y, 874, 'ks_1').setScale(1).refreshBody();
+        kyst.create(1700+y, 874, 'ks_2').setScale(1).refreshBody();
+        kyst.create(450+y, 879, 's_1').setScale(1).refreshBody();
+        kyst.create(1470+y, 880, 'd_3').setScale(1).refreshBody();
+        kyst.create(600+y, 801, 'd_1').setScale(1).refreshBody();
+        kyst.create(2000+y, 810, 'd_2').setScale(1).refreshBody();
+    }
+
     //
     but = this.physics.add.staticGroup();
     but.create(100, 120, 'But1').setScale(1).refreshBody();
@@ -177,10 +182,9 @@ function create() {
     });
 
     cursors = this.input.keyboard.createCursorKeys();
-
     stars = this.physics.add.group({
         key: 'star',
-        repeat: 24,
+        repeat: 135,
         setXY: { x: 180, y: 0, stepX: 70 }
     });
 
@@ -251,6 +255,7 @@ function update() {
         player.setVelocityX(0);
         player.anims.play('turn');
     }
+    player.x = Phaser.Math.Clamp(player.x, 0, worldWidht - player.width);
     if (cursors.up.isDown && player.body.touching.down) {
         player.setVelocityY(-330);
         jumpSound.play();
