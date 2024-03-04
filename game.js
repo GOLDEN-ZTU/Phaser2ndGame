@@ -102,7 +102,7 @@ function create() {
     // platforms.create(1799, 932, 'ground2').setScale(1).refreshBody();
     // platforms.create(1875, 932, 'ground3').setScale(1).refreshBody();
 
-    player = this.physics.add.sprite(100, 450, 'dude');
+    player = this.physics.add.sprite(100, 450, 'dude').setDepth(5);
     player.setBounce(0.2);
     player.setCollideWorldBounds(false);
     //
@@ -200,7 +200,7 @@ function create() {
 
     bombs = this.physics.add.group();
 
-    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+    scoreText = this.add.text(200, 100, 'score: 0', { fontSize: '32px', fill: '#000' });
 
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(stars, platforms);
