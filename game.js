@@ -213,7 +213,8 @@ function create() {
     badGuy.setBounce(0.2);
     badGuy.setCollideWorldBounds(true);
     badGuy.setGravityY(0);
-    this.physics.add.collider(badGuy, platforms);
+    this.physics.add.collider(badGuy, platforms,);
+    this.physics.add.collider(player, badGuy,hitBomb, null, this);
 
     this.anims.create({
         key: 'badGuyLeft',
