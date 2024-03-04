@@ -109,42 +109,42 @@ function create() {
     //платформа кусти,дерева,камні
     for (var y = 0; y < worldWidht; y = y + 1920) {
         console.log(y)
-        kyst.create(1100+y, 874, 'ks_1').setScale(1).refreshBody();
-        kyst.create(1700+y, 874, 'ks_2').setScale(1).refreshBody();
-        kyst.create(450+y, 879, 's_1').setScale(1).refreshBody();
-        kyst.create(1470+y, 880, 'd_3').setScale(1).refreshBody();
-        kyst.create(600+y, 801, 'd_1').setScale(1).refreshBody();
-        kyst.create(2000+y, 810, 'd_2').setScale(1).refreshBody();
+        kyst.create(1100+y, 874, 'ks_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        kyst.create(1700+y, 874, 'ks_2').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        kyst.create(450+y, 879, 's_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        kyst.create(1470+y, 880, 'd_3').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        kyst.create(600+y, 801, 'd_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        kyst.create(2000+y, 810, 'd_2').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
             //
         platforms.create(1825+y, 754, 'ground_3').setScale(1).refreshBody();
         platforms.create(1749+y, 754, 'ground_2').setScale(1).refreshBody();
         platforms.create(1674+y, 753, 'ground_1').setScale(1).refreshBody();
-        kyst.create(1750+y, 643, 'd_2').setScale(1).refreshBody();
-        kyst.create(1670+y, 712, 's_1').setScale(1).refreshBody();
+        kyst.create(1750+y, 644, 'd_2').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        kyst.create(1670+y, 712, 's_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         //
         platforms.create(1425+y, 614, 'ground_3').setScale(1).refreshBody();
         platforms.create(1349+y, 614, 'ground_2').setScale(1).refreshBody();
         platforms.create(1274+y, 614, 'ground_2').setScale(1).refreshBody();
         platforms.create(1198+y, 613, 'ground_1').setScale(1).refreshBody();
-        kyst.create(1300+y, 567, 'ks_1').setScale(1).refreshBody();
+        kyst.create(1300+y, 567, 'ks_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         //
         platforms.create(1025+y, 714, 'ground_3').setScale(1).refreshBody();
         platforms.create(949+y, 714, 'ground_2').setScale(1).refreshBody();
         platforms.create(874+y, 714, 'ground_2').setScale(1).refreshBody();
         platforms.create(798+y, 713, 'ground_1').setScale(1).refreshBody();
-        kyst.create(850+y, 672, 's_1').setScale(1).refreshBody();
+        kyst.create(850+y, 672, 's_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         //
         platforms.create(725+y, 534, 'ground_3').setScale(1).refreshBody();
         platforms.create(649+y, 534, 'ground_2').setScale(1).refreshBody();
         platforms.create(572+y, 534, 'ground_2').setScale(1).refreshBody();
         platforms.create(497+y, 534, 'ground_2').setScale(1).refreshBody();
         platforms.create(422+y, 533, 'ground_1').setScale(1).refreshBody();
-        kyst.create(600+y, 487, 'ks_1').setScale(1).refreshBody();
-        kyst.create(470+y, 493, 'd_3').setScale(1).refreshBody();
+        kyst.create(600+y, 487, 'ks_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        kyst.create(470+y, 493, 'd_3').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         //
         platforms.create(297+y, 384, 'ground_3').setScale(1).refreshBody();
         platforms.create(222+y, 383, 'ground_1').setScale(1).refreshBody();
-        kyst.create(250+y, 273, 'd_2').setScale(1).refreshBody();
+        kyst.create(250+y, 274, 'd_2').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         //
     }
     //-----------------
