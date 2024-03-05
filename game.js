@@ -152,7 +152,7 @@ function create() {
     win.create(9525, 600, 'win1').setDisplaySize(70, 70);
     //-------------------
     but = this.physics.add.staticGroup();
-    but.create(100, 120, 'But1').setScale(1).refreshBody();
+    but.create(100, 120, 'But1').setScale(1).refreshBody().setScrollFactor(0);
     //
     this.cameras.main.setBounds(0,0,worldWidht,1080);
     this.physics.world.setBounds(0,0,worldWidht,1080);
@@ -209,6 +209,7 @@ function create() {
     this.physics.add.collider(player, bombs, hitBomb, null, this);
     jumpSound = this.sound.add('jumpSound');
     this.physics.add.collider(win, platforms);
+    this.physics.add.collider(player,win,win_all,null,this);
     badGuy = this.physics.add.sprite(1140, 450, 'dude_angry').setDepth(4);
     badGuy.setBounce(0.2);
     badGuy.setCollideWorldBounds(true);
@@ -300,11 +301,11 @@ function endGame(isWin) {
     this.physics.pause();
 
     if (isWin) {
-        var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You Win!', { fontSize: '32px', fill: '#fff' });
+        var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You Win!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
     } else {
         player.setTint(0xff0000);
         player.anims.play('turn');
-        var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You Lose!', { fontSize: '32px', fill: '#fff' });
+        var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You Lose!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
     }
 
     gameOver = true;
@@ -341,7 +342,14 @@ function hitBomb(player, bomb) {
     player.setTint(0xff0000);
     player.anims.play('turn');
     gameOver = true;
-    var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You are dead!', { fontSize: '32px', fill: '#fff' });
+    var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You are dead!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
+}
+function win_all(player, win1) {
+    this.physics.pause();
+    player.setTint(0xff0000);
+    player.anims.play('turn');
+    gameOver = true;
+    var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You win!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
 }
 
 function restartGame() {
