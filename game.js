@@ -209,7 +209,7 @@ function create() {
     this.physics.add.collider(player, bombs, hitBomb, null, this);
     jumpSound = this.sound.add('jumpSound');
     this.physics.add.collider(win, platforms);
-    badGuy = this.physics.add.sprite(1140, 450, 'dude_angry');
+    badGuy = this.physics.add.sprite(1140, 450, 'dude_angry').setDepth(4);
     badGuy.setBounce(0.2);
     badGuy.setCollideWorldBounds(true);
     badGuy.setGravityY(0);
