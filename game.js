@@ -345,10 +345,9 @@ function hitBomb(player, bomb) {
 }
 
 function restartGame() {
-    // Stop the physics
+
     this.physics.pause();
 
-    // Clean up game objects
     player.destroy();
     badGuy.destroy();
     stars.clear(true, true);
@@ -356,8 +355,6 @@ function restartGame() {
     platforms.clear(true, true);
     kyst.clear(true, true);
     but.clear(true, true);
-    restartButton.destroy();
 
-    // Restart the scene
     this.scene.restart();
 }
