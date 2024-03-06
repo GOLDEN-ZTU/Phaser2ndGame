@@ -2,6 +2,8 @@ var config = {
     type: Phaser.AUTO,
     width: 1920,
     height: 1080,
+    parent:game,
+    playerSpeed:500,
     physics: {
         default: 'arcade',
         arcade: {
@@ -33,16 +35,19 @@ var restartButton;
 var score = 0;
 //
 var worldWidht = 9600
+//
 function preload() {
     this.load.image('fon+', 'assets/fon+.jpg');
     //
     this.load.image('But1', 'assets/Button_1.png');
-    this.load.image('ground1', 'assets/1pl.png');
-    this.load.image('ground2', 'assets/2pl.png');
+    this.load.image('ground1', 'assets/1.png');
+    this.load.image('ground2', 'assets/2.png');
     this.load.image('ground3', 'assets/3pl.png');
     this.load.image('ground_1', 'assets/1up.png');
     this.load.image('ground_2', 'assets/2up.png');
     this.load.image('ground_3', 'assets/3up.png');
+    this.load.image('undeground_1', 'assets/4.png');
+    this.load.image('undeground_2', 'assets/5.png');
 
     this.load.image('ks_1', 'assets/kyst1.png');
     this.load.image('ks_2', 'assets/kyst2.png');
@@ -70,13 +75,18 @@ function create() {
     platforms = this.physics.add.staticGroup();
     //this.add.image(960, 500, 'sky');
     
-    for (var x = 77; x < worldWidht; x = x + 76) {
+    for (var x = 114; x < worldWidht; x = x + 75) {
         console.log(x)
-        platforms.create(x, 892, 'ground2').setOrigin(0,0).refreshBody();
+        platforms.create(x, 932, 'ground2').setDisplaySize(75, 79).refreshBody();
+    }
+    for (var r = 114; r < worldWidht; r = r + 75) {
+        console.log(r)
+        platforms.create(r, 1009, 'undeground_2').setDisplaySize(75, 79).refreshBody();
     }
     ; kyst = this.physics.add.staticGroup();
     
-     platforms.create(40, 932, 'ground1').setScale(1).refreshBody();
+     platforms.create(40, 932, 'ground1').setDisplaySize(75, 79).refreshBody();
+     platforms.create(40, 1009, 'undeground_1').setDisplaySize(75, 79).refreshBody();
     // platforms.create(127, 932, 'ground2').setScale(1).refreshBody();
     // platforms.create(203, 932, 'ground2').setScale(1).refreshBody();
     // platforms.create(279, 932, 'ground2').setScale(1).refreshBody();
@@ -200,7 +210,7 @@ function create() {
 
     bombs = this.physics.add.group();
 
-    scoreText = this.add.text(200, 100, 'score: 0', { fontSize: '32px', fill: '#000' });
+    scoreText = this.add.text(200, 100, 'score: 0', { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
 
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(stars, platforms);
