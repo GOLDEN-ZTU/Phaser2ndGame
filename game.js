@@ -29,37 +29,29 @@ var game = new Phaser.Game(config);
 var badGuy;
 var jumpSound;
 var jumps = 2;
-//
 var restartButton;
-//
 var score = 0;
-//
 var worldWidht = 9600
 //
 function preload() {
     this.load.image('fon+', 'assets/fon+.jpg');
-    //
     this.load.image('But1', 'assets/Button_1.png');
     this.load.image('ground1', 'assets/1.png');
     this.load.image('ground2', 'assets/2.png');
     this.load.image('ground3', 'assets/3pl.png');
-    this.load.image('ground_1', 'assets/1up.png');
-    this.load.image('ground_2', 'assets/2up.png');
-    this.load.image('ground_3', 'assets/3up.png');
+    this.load.image('ground_1', 'assets/13.png');
+    this.load.image('ground_2', 'assets/14.png');
+    this.load.image('ground_3', 'assets/15.png');
     this.load.image('undeground_1', 'assets/4.png');
     this.load.image('undeground_2', 'assets/5.png');
-
     this.load.image('ks_1', 'assets/kyst1.png');
     this.load.image('ks_2', 'assets/kyst2.png');
     this.load.image('d_1', 'assets/dub1.png');
     this.load.image('d_2', 'assets/dub2.png');
     this.load.image('d_3', 'assets/dub3.png');
     this.load.image('s_1', 'assets/stone.png');
-
     this.load.image('sky', 'assets/fon.jpg');
-    //
     this.load.image('ground', 'assets/platform1.png');
-    //
     this.load.image('star', 'assets/pngwing.com.png');
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/dude1.png', { frameWidth: 32, frameHeight: 48 });
@@ -68,13 +60,10 @@ function preload() {
     this.load.image('win1', 'assets/win1.webp');
 }
 function create() {
-
     //
     this.add.tileSprite(0, 0, worldWidht, 1080, "fon+").setOrigin(0, 0);
-
     platforms = this.physics.add.staticGroup();
-    //this.add.image(960, 500, 'sky');
-    
+    //
     for (var x = 114; x < worldWidht; x = x + 75) {
         console.log(x)
         platforms.create(x, 932, 'ground2').setDisplaySize(75, 79).refreshBody();
@@ -87,35 +76,9 @@ function create() {
     
      platforms.create(40, 932, 'ground1').setDisplaySize(75, 79).refreshBody();
      platforms.create(40, 1009, 'undeground_1').setDisplaySize(75, 79).refreshBody();
-    // platforms.create(127, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(203, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(279, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(355, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(431, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(507, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(583, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(659, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(735, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(811, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(887, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(963, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(1039, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(1115, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(1191, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(1267, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(1343, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(1419, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(1495, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(1571, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(1647, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(1723, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(1799, 932, 'ground2').setScale(1).refreshBody();
-    // platforms.create(1875, 932, 'ground3').setScale(1).refreshBody();
-
     player = this.physics.add.sprite(100, 450, 'dude').setDepth(5);
     player.setBounce(0.2);
     player.setCollideWorldBounds(false);
-    //
     //платформа кусти,дерева,камні
     for (var y = 0; y < worldWidht; y = y + 1920) {
         console.log(y)
@@ -125,36 +88,36 @@ function create() {
         kyst.create(1470+y, 880, 'd_3').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         kyst.create(600+y, 801, 'd_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         kyst.create(2000+y, 810, 'd_2').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
-            //
-        platforms.create(1825+y, 754, 'ground_3').setScale(1).refreshBody();
-        platforms.create(1749+y, 754, 'ground_2').setScale(1).refreshBody();
-        platforms.create(1674+y, 753, 'ground_1').setScale(1).refreshBody();
-        kyst.create(1750+y, 644, 'd_2').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
-        kyst.create(1670+y, 712, 's_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         //
-        platforms.create(1425+y, 614, 'ground_3').setScale(1).refreshBody();
-        platforms.create(1349+y, 614, 'ground_2').setScale(1).refreshBody();
-        platforms.create(1274+y, 614, 'ground_2').setScale(1).refreshBody();
-        platforms.create(1198+y, 613, 'ground_1').setScale(1).refreshBody();
-        kyst.create(1300+y, 567, 'ks_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        platforms.create(1674+78+78+y, 754, 'ground_3').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(1674+78+y, 754, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(1674+y, 754, 'ground_1').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        kyst.create(1750+y, 645, 'd_2').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        kyst.create(1670+y, 713, 's_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         //
-        platforms.create(1025+y, 714, 'ground_3').setScale(1).refreshBody();
-        platforms.create(949+y, 714, 'ground_2').setScale(1).refreshBody();
-        platforms.create(874+y, 714, 'ground_2').setScale(1).refreshBody();
-        platforms.create(798+y, 713, 'ground_1').setScale(1).refreshBody();
-        kyst.create(850+y, 672, 's_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        platforms.create(1196+78+78+78+y, 614, 'ground_3').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(1196+78+78+y, 614, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(1196+78+y, 614, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(1196+y, 614, 'ground_1').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        kyst.create(1300+y, 568, 'ks_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         //
-        platforms.create(725+y, 534, 'ground_3').setScale(1).refreshBody();
-        platforms.create(649+y, 534, 'ground_2').setScale(1).refreshBody();
-        platforms.create(572+y, 534, 'ground_2').setScale(1).refreshBody();
-        platforms.create(497+y, 534, 'ground_2').setScale(1).refreshBody();
-        platforms.create(422+y, 533, 'ground_1').setScale(1).refreshBody();
-        kyst.create(600+y, 487, 'ks_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
-        kyst.create(470+y, 493, 'd_3').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        platforms.create(798+78+78+78+y, 714, 'ground_3').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(798+78+78+y, 714, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(798+78+y, 714, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(798+y, 714, 'ground_1').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        kyst.create(850+y, 673, 's_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         //
-        platforms.create(297+y, 384, 'ground_3').setScale(1).refreshBody();
-        platforms.create(222+y, 383, 'ground_1').setScale(1).refreshBody();
-        kyst.create(250+y, 274, 'd_2').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        platforms.create(422+78+78+78+78+y, 534, 'ground_3').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(422+78+78+78+y, 534, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(422+78+78+y, 534, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(422+78+y, 534, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(422+y, 534, 'ground_1').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        kyst.create(600+y, 488, 'ks_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        kyst.create(470+y, 494, 'd_3').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        //
+        platforms.create(222+78+y, 384, 'ground_3').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(222+y, 384, 'ground_1').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        kyst.create(250+y, 275, 'd_2').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         //
     }
     //-----------------
@@ -203,9 +166,7 @@ function create() {
     });
 
     stars.children.iterate(function (child) {
-
         child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-
     });
 
     bombs = this.physics.add.group();
@@ -246,7 +207,6 @@ function create() {
         frameRate: 10,
         repeat: -1
     });
-
 
 }
 
@@ -292,7 +252,6 @@ function update() {
     }
     this.physics.world.collide(player, badGuy, function () {
         endGame(false);
-
     });
     if (badGuy.body.velocity.x > 0) {
         badGuy.anims.play('badGuyRight', true);
@@ -317,11 +276,9 @@ function endGame(isWin) {
         player.anims.play('turn');
         var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You Lose!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
     }
-
     gameOver = true;
     restartButton.visible = true;
 }
-
 function collectStar(player, star) {
     star.disableBody(true, true);
     score += 10;
@@ -363,9 +320,7 @@ function win_all(player, win1) {
 }
 
 function restartGame() {
-
     this.physics.pause();
-
     player.destroy();
     badGuy.destroy();
     stars.clear(true, true);
@@ -373,6 +328,5 @@ function restartGame() {
     platforms.clear(true, true);
     kyst.clear(true, true);
     but.clear(true, true);
-
     this.scene.restart();
 }
