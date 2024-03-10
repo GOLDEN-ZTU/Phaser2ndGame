@@ -32,7 +32,10 @@ var jumps = 2;
 var restartButton;
 var score = 0;
 var worldWidht = 9600
-//
+var badGuys = [];
+var deadSound;
+var collectCoinSound;
+var winsound;
 function preload() {
     this.load.image('fon+', 'assets/fon+.jpg');
     this.load.image('But1', 'assets/Button_1.png');
@@ -56,6 +59,9 @@ function preload() {
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/dude1.png', { frameWidth: 32, frameHeight: 48 });
     this.load.audio('jumpSound', 'assets/pryjok-mario.mp3');
+    this.load.audio('dead', 'assets/dead.mp3');
+    this.load.audio('money', 'assets/money.mp3');
+    this.load.audio('win', 'assets/win.mp3');
     this.load.spritesheet('dude_angry', 'assets/dude_angry.png', { frameWidth: 32, frameHeight: 48 });
     this.load.image('win1', 'assets/win1.webp');
 }
@@ -179,6 +185,9 @@ function create() {
     this.physics.add.overlap(player, stars, collectStar, null, this);
     this.physics.add.collider(player, bombs, hitBomb, null, this);
     jumpSound = this.sound.add('jumpSound');
+    deadSound = this.sound.add('dead');
+    collectCoinSound = this.sound.add('money');
+    winsound = this.sound.add('win')
     this.physics.add.collider(win, platforms);
     this.physics.add.collider(player,win,win_all,null,this);
     badGuy = this.physics.add.sprite(1140, 450, 'dude_angry').setDepth(4);
@@ -207,6 +216,18 @@ function create() {
         frameRate: 10,
         repeat: -1
     });
+
+    //
+    for (let i = 0; i < worldWidht / 1920; i++) {
+        let badGuy = this.physics.add.sprite(1140 + i * 1920, 450, 'dude_angry').setDepth(8);
+        badGuy.setBounce(0.2);
+        badGuy.setCollideWorldBounds(true);
+        badGuy.setGravityY(0);
+        this.physics.add.collider(badGuy, platforms);
+        this.physics.add.collider(player, badGuy, hitBomb, null, this);
+    
+        badGuys.push(badGuy);
+    }
 
 }
 
@@ -264,6 +285,24 @@ function update() {
     if (stars.countActive(true) === 0) {
         endGame(true);
     }
+    //
+    for (let i = 0; i < badGuys.length; i++) {
+        if (Math.random() < 0.02) {
+            badGuys[i].setVelocityX(Phaser.Math.Between(-200, 200));
+        }
+
+        this.physics.world.collide(player, badGuys[i], function () {
+            endGame(false);
+        });
+
+        if (badGuys[i].body.velocity.x > 0) {
+            badGuys[i].anims.play('badGuyRight', true);
+        } else if (badGuys[i].body.velocity.x < 0) {
+            badGuys[i].anims.play('badGuyLeft', true);
+        } else {
+            badGuys[i].anims.play('badGuyTurn');
+        }
+    }
 }
 //
 function endGame(isWin) {
@@ -283,6 +322,7 @@ function collectStar(player, star) {
     star.disableBody(true, true);
     score += 10;
     scoreText.setText('Score: ' + score);
+    collectCoinSound.play();
     var x = Phaser.Math.Between(0, config.width);
     var bomb = bombs.create(x, 16, 'bomb');
     bomb.setBounce(1);
@@ -309,6 +349,7 @@ function hitBomb(player, bomb) {
     player.setTint(0xff0000);
     player.anims.play('turn');
     gameOver = true;
+    deadSound.play();
     var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You are dead!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
 }
 function win_all(player, win1) {
@@ -316,6 +357,7 @@ function win_all(player, win1) {
     player.setTint(0xff0000);
     player.anims.play('turn');
     gameOver = true;
+    winsound.play();
     var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You win!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
 }
 
