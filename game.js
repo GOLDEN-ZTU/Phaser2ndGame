@@ -64,6 +64,7 @@ function preload() {
     this.load.audio('win', 'assets/win.mp3');
     this.load.spritesheet('dude_angry', 'assets/dude_angry.png', { frameWidth: 32, frameHeight: 48 });
     this.load.image('win1', 'assets/win1.webp');
+    this.load.image('helth','assets/helth.png');
 }
 function create() {
     //
@@ -132,6 +133,9 @@ function create() {
     //-------------------
     but = this.physics.add.staticGroup();
     but.create(100, 120, 'But1').setScale(1).refreshBody().setScrollFactor(0);
+    //
+    hp = this.physics.add.staticGroup();
+    hp.create(400, 110, 'helth').setDisplaySize(51, 51).refreshBody().setScrollFactor(0);
     //
     this.cameras.main.setBounds(0,0,worldWidht,1080);
     this.physics.world.setBounds(0,0,worldWidht,1080);
