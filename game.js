@@ -2,13 +2,13 @@ var config = {
     type: Phaser.AUTO,
     width: 1920,
     height: 1080,
-    parent:game,
-    playerSpeed:500,
+    parent: game,
+    playerSpeed: 500,
     physics: {
         default: 'arcade',
         arcade: {
             gravity: { y: 300 },
-            debug: false
+            debug: true
         }
     },
     scene: {
@@ -64,7 +64,7 @@ function preload() {
     this.load.audio('win', 'assets/win.mp3');
     this.load.spritesheet('dude_angry', 'assets/dude_angry.png', { frameWidth: 32, frameHeight: 48 });
     this.load.image('win1', 'assets/win1.webp');
-    this.load.image('helth','assets/helth.png');
+    this.load.image('helth', 'assets/helth.png');
 }
 function create() {
     //
@@ -80,74 +80,80 @@ function create() {
         platforms.create(r, 1009, 'undeground_2').setDisplaySize(75, 79).refreshBody();
     }
     ; kyst = this.physics.add.staticGroup();
-    
-     platforms.create(40, 932, 'ground1').setDisplaySize(75, 79).refreshBody();
-     platforms.create(40, 1009, 'undeground_1').setDisplaySize(75, 79).refreshBody();
+
+    platforms.create(40, 932, 'ground1').setDisplaySize(75, 79).refreshBody();
+    platforms.create(40, 1009, 'undeground_1').setDisplaySize(75, 79).refreshBody();
     player = this.physics.add.sprite(100, 450, 'dude').setDepth(5);
     player.setBounce(0.2);
     player.setCollideWorldBounds(false);
     //платформа кусти,дерева,камні
     for (var y = 0; y < worldWidht; y = y + 1920) {
         console.log(y)
-        kyst.create(1100+y, 874, 'ks_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
-        kyst.create(1700+y, 874, 'ks_2').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
-        kyst.create(450+y, 879, 's_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
-        kyst.create(1470+y, 880, 'd_3').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
-        kyst.create(600+y, 801, 'd_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
-        kyst.create(2000+y, 810, 'd_2').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        kyst.create(1100 + y, 874, 'ks_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        kyst.create(1700 + y, 874, 'ks_2').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        kyst.create(450 + y, 879, 's_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        kyst.create(1470 + y, 880, 'd_3').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        kyst.create(600 + y, 801, 'd_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        kyst.create(2000 + y, 810, 'd_2').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         //
-        platforms.create(1674+78+78+y, 754, 'ground_3').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        platforms.create(1674+78+y, 754, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        platforms.create(1674+y, 754, 'ground_1').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        kyst.create(1750+y, 645, 'd_2').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
-        kyst.create(1670+y, 713, 's_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        platforms.create(1674 + 78 + 78 + y, 754, 'ground_3').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(1674 + 78 + y, 754, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(1674 + y, 754, 'ground_1').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        kyst.create(1750 + y, 645, 'd_2').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        kyst.create(1670 + y, 713, 's_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         //
-        platforms.create(1196+78+78+78+y, 614, 'ground_3').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        platforms.create(1196+78+78+y, 614, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        platforms.create(1196+78+y, 614, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        platforms.create(1196+y, 614, 'ground_1').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        kyst.create(1300+y, 568, 'ks_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        platforms.create(1196 + 78 + 78 + 78 + y, 614, 'ground_3').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(1196 + 78 + 78 + y, 614, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(1196 + 78 + y, 614, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(1196 + y, 614, 'ground_1').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        kyst.create(1300 + y, 568, 'ks_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         //
-        platforms.create(798+78+78+78+y, 714, 'ground_3').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        platforms.create(798+78+78+y, 714, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        platforms.create(798+78+y, 714, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        platforms.create(798+y, 714, 'ground_1').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        kyst.create(850+y, 673, 's_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        platforms.create(798 + 78 + 78 + 78 + y, 714, 'ground_3').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(798 + 78 + 78 + y, 714, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(798 + 78 + y, 714, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(798 + y, 714, 'ground_1').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        kyst.create(850 + y, 673, 's_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         //
-        platforms.create(422+78+78+78+78+y, 534, 'ground_3').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        platforms.create(422+78+78+78+y, 534, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        platforms.create(422+78+78+y, 534, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        platforms.create(422+78+y, 534, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        platforms.create(422+y, 534, 'ground_1').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        kyst.create(600+y, 488, 'ks_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
-        kyst.create(470+y, 494, 'd_3').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        platforms.create(422 + 78 + 78 + 78 + 78 + y, 534, 'ground_3').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(422 + 78 + 78 + 78 + y, 534, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(422 + 78 + 78 + y, 534, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(422 + 78 + y, 534, 'ground_2').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(422 + y, 534, 'ground_1').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        kyst.create(600 + y, 488, 'ks_1').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        kyst.create(470 + y, 494, 'd_3').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         //
-        platforms.create(222+78+y, 384, 'ground_3').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        platforms.create(222+y, 384, 'ground_1').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
-        kyst.create(250+y, 275, 'd_2').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
+        platforms.create(222 + 78 + y, 384, 'ground_3').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        platforms.create(222 + y, 384, 'ground_1').setScale(1).refreshBody().setDisplaySize(78, 55).refreshBody();
+        kyst.create(250 + y, 275, 'd_2').setScale(1).refreshBody().setDepth(Phaser.Math.Between(1, 10));
         //
     }
     //-----------------
     win = this.physics.add.group();
     win.create(9525, 600, 'win1').setDisplaySize(70, 70);
     //-------------------
-    but = this.physics.add.staticGroup();
-    but.create(100, 120, 'But1').setScale(1).refreshBody().setScrollFactor(0);
+    //but = this.physics.add.staticGroup();
+    
     //
     hp = this.physics.add.staticGroup();
     hp.create(400, 110, 'helth').setDisplaySize(51, 51).refreshBody().setScrollFactor(0);
     //
-    this.cameras.main.setBounds(0,0,worldWidht,1080);
-    this.physics.world.setBounds(0,0,worldWidht,1080);
+    this.cameras.main.setBounds(0, 0, worldWidht, 1080);
+    this.physics.world.setBounds(0, 0, worldWidht, 1080);
     this.cameras.main.startFollow(player);
     //
-    restartButton = this.add.sprite(100, 120, 'But1')
+    // restartButton.create(100, 120, 'But1')
+    // .setScale(1)
+    // .setScrollFactor(0);
+
+    restartButton = this.add.image(100, 120, 'But1')
+        .setDepth(20)
         .setInteractive()
+        .setScrollFactor(0)
         .on('pointerdown', function () {
             restartGame();
         });
 
-    restartButton.visible = false;
+    //restartButton.visible = false;
     this.anims.create({
         key: 'left',
         frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
@@ -193,13 +199,13 @@ function create() {
     collectCoinSound = this.sound.add('money');
     winsound = this.sound.add('win')
     this.physics.add.collider(win, platforms);
-    this.physics.add.collider(player,win,win_all,null,this);
+    this.physics.add.collider(player, win, win_all, null, this);
     badGuy = this.physics.add.sprite(1140, 450, 'dude_angry').setDepth(4);
     badGuy.setBounce(0.2);
     badGuy.setCollideWorldBounds(true);
     badGuy.setGravityY(0);
     this.physics.add.collider(badGuy, platforms,);
-    this.physics.add.collider(player, badGuy,hitBomb, null, this);
+    this.physics.add.collider(player, badGuy, hitBomb, null, this);
 
     this.anims.create({
         key: 'badGuyLeft',
@@ -229,7 +235,7 @@ function create() {
         badGuy.setGravityY(0);
         this.physics.add.collider(badGuy, platforms);
         this.physics.add.collider(player, badGuy, hitBomb, null, this);
-    
+
         badGuys.push(badGuy);
     }
 
@@ -366,13 +372,14 @@ function win_all(player, win1) {
 }
 
 function restartGame() {
-    this.physics.pause();
+    gameOver = false;
+    score = 0;
     player.destroy();
     badGuy.destroy();
     stars.clear(true, true);
     bombs.clear(true, true);
     platforms.clear(true, true);
     kyst.clear(true, true);
-    but.clear(true, true);
-    this.scene.restart();
+    //restartButton.visible
+    self.scene.restart(); 
 }
