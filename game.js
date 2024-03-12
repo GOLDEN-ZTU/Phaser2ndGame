@@ -8,7 +8,7 @@ var config = {
         default: 'arcade',
         arcade: {
             gravity: { y: 300 },
-            debug: true
+            debug: false
         }
     },
     scene: {
@@ -134,8 +134,8 @@ function create() {
     //but = this.physics.add.staticGroup();
     
     //
-    hp = this.physics.add.staticGroup();
-    hp.create(400, 110, 'helth').setDisplaySize(51, 51).refreshBody().setScrollFactor(0);
+    //hp = this.physics.add.staticGroup();
+    //hp.create(400, 110, 'helth').setDisplaySize(51, 51).refreshBody().setScrollFactor(0);
     //
     this.cameras.main.setBounds(0, 0, worldWidht, 1080);
     this.physics.world.setBounds(0, 0, worldWidht, 1080);
