@@ -2,7 +2,7 @@ var config = {
     type: Phaser.AUTO,
     width: 1920,
     height: 1080,
-    parent: game,
+    parent: 'game',
     playerSpeed: 500,
     physics: {
         default: 'arcade',
@@ -36,6 +36,8 @@ var badGuys = [];
 var deadSound;
 var collectCoinSound;
 var winsound;
+var life=5;
+var lifeText
 function preload() {
     this.load.image('fon+', 'assets/fon+.jpg');
     this.load.image('But1', 'assets/Button_1.png');
@@ -134,9 +136,19 @@ function create() {
     //but = this.physics.add.staticGroup();
     
     //
-    //hp = this.physics.add.staticGroup();
-    //hp.create(400, 110, 'helth').setDisplaySize(51, 51).refreshBody().setScrollFactor(0);
+    //lifeText = this.physics.add.staticGroup();
+    lifeText = this.add.text(200, 100, showlife(), { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
+    
+    //lifeText.create(400, 110, showlife()).setDisplaySize(51, 51).refreshBody().setScrollFactor(0);
     //
+    lifeBar = document.createElement('div');
+    lifeBar.style.position = 10,10;
+    lifeBar.style.top = '0';
+    lifeBar.style.left = '0';
+    lifeBar.innerHTML = showlife(); 
+    document.body.appendChild(lifeBar);
+    //lifeText=this.add.text(1500,100,'helth').setOrigin(0,0).setScrollFactor(0);
+    //lifeText=this.add.text(400,100,showlife(),{fontSize:'40px',fil:'#FFF'}).setOrigin(0,0).setScrollFactor(0);
     this.cameras.main.setBounds(0, 0, worldWidht, 1080);
     this.physics.world.setBounds(0, 0, worldWidht, 1080);
     this.cameras.main.startFollow(player);
@@ -313,6 +325,8 @@ function update() {
             badGuys[i].anims.play('badGuyTurn');
         }
     }
+    //
+    lifeBar.innerHTML = showlife();
 }
 //
 function endGame(isWin) {
@@ -354,13 +368,25 @@ function collectStar(player, star) {
         }
     }
 }
+function decreaseLife() {
+    life--; 
+    lifeline.setText(showlife()); 
+
+    if (life === 0) {
+        endGame(false); 
+    }
+}
 function hitBomb(player, bomb) {
-    this.physics.pause();
-    player.setTint(0xff0000);
-    player.anims.play('turn');
-    gameOver = true;
-    deadSound.play();
-    var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You are dead!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
+    decreaseLife();
+    if(life==0 ){
+        endGame(false);
+        this.physics.pause();
+        player.setTint(0xff0000);
+        player.anims.play('turn');
+        gameOver = true;
+        deadSound.play();
+        var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You are dead!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
+    }
 }
 function win_all(player, win1) {
     this.physics.pause();
@@ -370,10 +396,19 @@ function win_all(player, win1) {
     winsound.play();
     var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You win!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
 }
+//function showlife(): String
+function showlife(){
+    var lifeline='';
+    for(var i = 0; i < life; i++){
+        lifeline += '❤'
+    }
+    return lifeline;
+}
 
 function restartGame() {
     gameOver = false;
     score = 0;
+    life=5;
     player.destroy();
     badGuy.destroy();
     stars.clear(true, true);
