@@ -38,6 +38,11 @@ var collectCoinSound;
 var winsound;
 var life=5;
 var lifeText
+//
+var resistDuration = 5000;
+//
+var immune = false;
+//
 function preload() {
     this.load.image('fon+', 'assets/fon+.jpg');
     this.load.image('But1', 'assets/Button_1.png');
@@ -137,7 +142,7 @@ function create() {
     
     //
     //lifeText = this.physics.add.staticGroup();
-    lifeText = this.add.text(200, 100, showlife(), { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
+    lifeText = this.add.text(400, 100, showlife(), { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
     
     //lifeText.create(400, 110, showlife()).setDisplaySize(51, 51).refreshBody().setScrollFactor(0);
     //
@@ -373,21 +378,31 @@ function decreaseLife() {
     lifeline.setText(showlife()); 
 
     if (life === 0) {
-        endGame(false); 
+        var loseText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You have 1 life left!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
     }
 }
 function hitBomb(player, bomb) {
-    decreaseLife();
-    if(life==0 ){
-        endGame(false);
-        this.physics.pause();
-        player.setTint(0xff0000);
-        player.anims.play('turn');
-        gameOver = true;
-        deadSound.play();
-        var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You are dead!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
+    if (!immune) { 
+        life--; 
+        lifeText.setText(showlife());
+
+        if (life === 0) {
+            var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You are dead!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
+            endGame(false);
+            this.physics.pause();
+            player.setTint(0xff0000);
+            player.anims.play('turn');
+            deadSound.play();
+            gameOver = true;
+        } else {
+            immune = true;
+            this.time.delayedCall(resistDuration, function() {
+                immune = false; 
+            }, [], this);
+        }
     }
 }
+  
 function win_all(player, win1) {
     this.physics.pause();
     player.setTint(0xff0000);
@@ -396,7 +411,7 @@ function win_all(player, win1) {
     winsound.play();
     var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You win!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
 }
-//function showlife(): String
+
 function showlife(){
     var lifeline='';
     for(var i = 0; i < life; i++){
@@ -408,13 +423,13 @@ function showlife(){
 function restartGame() {
     gameOver = false;
     score = 0;
-    life=5;
+    life = 5;
     player.destroy();
     badGuy.destroy();
     stars.clear(true, true);
     bombs.clear(true, true);
     platforms.clear(true, true);
     kyst.clear(true, true);
-    //restartButton.visible
+    lifeText.setText(showlife());
     self.scene.restart(); 
 }
