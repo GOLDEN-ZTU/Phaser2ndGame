@@ -144,7 +144,7 @@ function create() {
     lifeBar.style.top = '0';
     lifeBar.style.left = '0';
     lifeBar.innerHTML = showlife(); 
-    document.body.appendChild(lifeBar);
+    //document.body.appendChild(lifeBar);
 
     this.cameras.main.setBounds(0, 0, worldWidht, 1080);
     this.physics.world.setBounds(0, 0, worldWidht, 1080);
