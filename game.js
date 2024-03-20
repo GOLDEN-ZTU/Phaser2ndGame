@@ -365,12 +365,11 @@ function hitBomb(player, bomb) {
         lifeText.setText(showlife());
         if (life === 0) {
             winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You Lose!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
+            player.setTint(0xff0000);
             this.physics.pause();
+            deadSound.play();
             //endGame(false);
             //this.physics.pause();
-            //player.setTint(0xff0000);
-            //player.anims.play('turn');
-            //deadSound.play();
             //gameOver = true;
         } else {
             immune = true;
@@ -383,7 +382,7 @@ function hitBomb(player, bomb) {
 
 function win_all(player, win1) {
     this.physics.pause();
-    player.setTint(0xff0000);
+    player.setTint(0xFF00);
     player.anims.play('turn');
     gameOver = true;
     winsound.play();
