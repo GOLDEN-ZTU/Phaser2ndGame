@@ -43,6 +43,8 @@ var resistDuration = 5000;
 //
 var immune = false;
 //
+var winText
+
 function preload() {
     this.load.image('fon+', 'assets/fon+.jpg');
     this.load.image('But1', 'assets/Button_1.png');
@@ -338,11 +340,12 @@ function endGame(isWin) {
     this.physics.pause();
 
     if (isWin) {
-        var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You Win!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
+        winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You Win!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
     } else {
         player.setTint(0xff0000);
         player.anims.play('turn');
-        var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You Lose!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
+        var loseText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You Lose!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
+        loseText.setDepth(1);
     }
     gameOver = true;
     restartButton.visible = true;
@@ -378,7 +381,7 @@ function decreaseLife() {
     lifeline.setText(showlife()); 
 
     if (life === 0) {
-        var loseText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You have 1 life left!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
+        winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You are dead!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
     }
 }
 function hitBomb(player, bomb) {
@@ -387,7 +390,7 @@ function hitBomb(player, bomb) {
         lifeText.setText(showlife());
 
         if (life === 0) {
-            var winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You are dead!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
+            winText = this.add.text(config.width / 2 - 100, config.height / 2 - 50, 'You are dead!', { fontSize: '32px', fill: '#fff' }).setScrollFactor(0);
             endGame(false);
             this.physics.pause();
             player.setTint(0xff0000);
@@ -421,15 +424,5 @@ function showlife(){
 }
 
 function restartGame() {
-    gameOver = false;
-    score = 0;
-    life = 5;
-    player.destroy();
-    badGuy.destroy();
-    stars.clear(true, true);
-    bombs.clear(true, true);
-    platforms.clear(true, true);
-    kyst.clear(true, true);
-    lifeText.setText(showlife());
-    self.scene.restart(); 
+    location.reload();
 }
