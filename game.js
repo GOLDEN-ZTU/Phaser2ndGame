@@ -71,6 +71,7 @@ function preload() {
     this.load.spritesheet('dude_angry', 'assets/dude_angry.png', { frameWidth: 32, frameHeight: 48 });
     this.load.image('win1', 'assets/win1.webp');
     this.load.image('helth', 'assets/helth.png');
+    this.load.image('defuse', 'assets/fire.png');
 }
 function create() {
     //
@@ -205,10 +206,11 @@ function create() {
     this.physics.add.collider(win, platforms);
     this.physics.add.collider(player, win, win_all, null, this);
     badGuy = this.physics.add.sprite(1140, 450, 'dude_angry').setDepth(4);
+    //badGuy = this.physics.add.group();
     badGuy.setBounce(0.2);
     badGuy.setCollideWorldBounds(true);
     badGuy.setGravityY(0);
-    this.physics.add.collider(badGuy, platforms,);
+    this.physics.add.collider(badGuy, platforms);
     this.physics.add.collider(player, badGuy, hitBomb, null, this);
 
     this.anims.create({
@@ -230,9 +232,10 @@ function create() {
         frameRate: 10,
         repeat: -1
     });
-
+    
     for (let i = 0; i < worldWidht / 1920; i++) {
-        let badGuy = this.physics.add.sprite(1140 + i * 1920, 450, 'dude_angry').setDepth(8);
+        
+        let badGuy = this.physics.add.sprite(3060 + i * 1920, 450, 'dude_angry').setDepth(8);
         badGuy.setBounce(0.2);
         badGuy.setCollideWorldBounds(true);
         badGuy.setGravityY(0);
@@ -241,6 +244,7 @@ function create() {
 
         badGuys.push(badGuy);
     }
+    defuse = this.physics.add.staticGroup();
 
 }
 
@@ -313,6 +317,19 @@ function update() {
         }
     }
     lifeBar.innerHTML = showlife();
+
+
+    if(cursors.down.isDown){
+        x= player.x+30
+        y= player.y+5
+        defuse = this.physics.add.sprite(x, y, 'defuse').setDisplaySize(30, 10)
+        .setVelocityX (1000)
+        .setDepth(5);
+    }
+    this.physics.add.collider(badGuy, defuse,  (badGuy) => {
+        badGuy.disableBody (true, true);
+        defuse.disableBody (true, true);
+    },null,this);
 }
 
 function endGame(isWin) {
