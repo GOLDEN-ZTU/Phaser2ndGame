@@ -206,7 +206,7 @@ function create() {
     winsound = this.sound.add('win')
     this.physics.add.collider(win, platforms);
     this.physics.add.collider(player, win, win_all, null, this);
-    badGuy = this.physics.add.sprite(1140, 450, 'dude_angry').setDepth(4);
+    badGuy = this.physics.add.sprite(1140, 11450, 'dude_angry').setDepth(4);
     //badGuy = this.physics.add.group();
     badGuy.setBounce(0.2);
     badGuy.setCollideWorldBounds(true);
@@ -236,7 +236,7 @@ function create() {
     
     for (let i = 0; i < worldWidht / 1920; i++) {
         
-        let badGuy = this.physics.add.sprite(3060 + i * 1920, 450, 'dude_angry').setDepth(8);
+        let badGuy = this.physics.add.sprite(1140 + i * 1920, 450, 'dude_angry').setDepth(8);
         badGuy.setBounce(0.2);
         badGuy.setCollideWorldBounds(true);
         badGuy.setGravityY(0);
@@ -323,14 +323,18 @@ function update() {
     if(cursors.down.isDown){
         x= player.x+30
         y= player.y+5
-        defuse = this.physics.add.sprite(x, y, 'defuse').setDisplaySize(30, 10)
-        .setVelocityX (1000)
-        .setDepth(5);
+        var defuse = this.physics.add.sprite(x, y, 'defuse').setDisplaySize(30, 10)
+            .setDepth(5);
+        if (cursors.left.isDown) {
+            defuse.setVelocityX(-1000); 
+        } else {
+            defuse.setVelocityX(1000); 
+        }
+        this.physics.add.collider(badGuys, defuse, function(badGuys, defuse) {
+            badGuys.disableBody (true, true);
+            defuse.disableBody (true, true);
+        }, null, this);
     }
-    this.physics.add.collider(badGuy, defuse,  (badGuy) => {
-        badGuy.disableBody (true, true);
-        defuse.disableBody (true, true);
-    },null,this);
 }
 
 function endGame(isWin) {
