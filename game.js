@@ -199,6 +199,7 @@ function create() {
     this.physics.add.collider(bombs, platforms);
     this.physics.add.overlap(player, stars, collectStar, null, this);
     this.physics.add.collider(player, bombs, hitBomb, null, this);
+    this.physics.add.collider(player, badGuys, hitBomb, null, this);
     jumpSound = this.sound.add('jumpSound');
     deadSound = this.sound.add('dead');
     collectCoinSound = this.sound.add('money');
