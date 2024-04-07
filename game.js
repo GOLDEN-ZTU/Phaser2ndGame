@@ -28,6 +28,7 @@ var scoreText;
 var game = new Phaser.Game(config);
 var badGuy;
 var jumpSound;
+var gunSound;
 var jumps = 2;
 var restartButton;
 var score = 0;
@@ -41,6 +42,8 @@ var lifeText
 var resistDuration = 5000;
 var immune = false;
 var winText
+var lastShootTime = 0;
+var shootCooldown = 500;
 
 function preload() {
     this.load.image('fon+', 'assets/fon+.jpg');
@@ -72,6 +75,8 @@ function preload() {
     this.load.image('win1', 'assets/win1.webp');
     this.load.image('helth', 'assets/helth.png');
     this.load.image('defuse', 'assets/fire.png');
+    this.load.audio('gunSound', 'assets/gun.mp3');
+
 }
 function create() {
     //
@@ -201,6 +206,7 @@ function create() {
     this.physics.add.collider(player, bombs, hitBomb, null, this);
     this.physics.add.collider(player, badGuys, hitBomb, null, this);
     jumpSound = this.sound.add('jumpSound');
+    gunSound = this.sound.add('gunSound');
     deadSound = this.sound.add('dead');
     collectCoinSound = this.sound.add('money');
     winsound = this.sound.add('win')
@@ -320,23 +326,32 @@ function update() {
     lifeBar.innerHTML = showlife();
 
 
-    if(cursors.down.isDown){
-        x= player.x+30
-        y= player.y+5
-        var defuse = this.physics.add.sprite(x, y, 'defuse').setDisplaySize(30, 10)
-            .setDepth(5);
-        if (cursors.left.isDown) {
-            defuse.setVelocityX(-1000); 
-        } else {
-            defuse.setVelocityX(1000); 
-        }
-        this.physics.add.collider(badGuys, defuse, function(badGuys, defuse) {
-            badGuys.disableBody (true, true);
-            defuse.disableBody (true, true);
-        }, null, this);
+    if (cursors.down.isDown && this.time.now > lastShootTime + shootCooldown) {
+        shoot(this); 
+        lastShootTime = this.time.now; 
     }
 }
-
+function shoot(scene) {
+    if (scene.time.now > lastShootTime + shootCooldown) {
+        var x = player.x;
+        var y = player.y + 5;
+        var defuse = scene.physics.add.sprite(x, y, 'defuse').setDisplaySize(30, 10)
+            .setDepth(5);
+        gunSound.play();
+        if (cursors.left.isDown) {
+            defuse.setVelocityX(-1000);
+            defuse.setFlipX(true);
+        } else {
+            defuse.setVelocityX(1000);
+            defuse.setFlipX(false);
+        }
+        scene.physics.add.collider(badGuys, defuse, function (badGuys, defuse) {
+            badGuys.disableBody(true, true);
+            defuse.disableBody(true, true);
+        }, null, scene);
+        lastShootTime = scene.time.now; 
+    }
+}
 function endGame(isWin) {
     this.physics.pause();
     if (isWin) {
